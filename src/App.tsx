@@ -12,6 +12,7 @@ import { PWAInstallButton } from './components/PWAInstallButton';
 import { OfflineIndicator } from './components/OfflineIndicator';
 import { DailyTipCard } from './components/DailyTipCard';
 import { SongBook } from './components/SongBook';
+import { RightHandVideoSimulator } from './components/RightHandVideoSimulator';
 import { guitarAudio } from './services/guitarAudio';
 import { 
   GraduationCap, 
@@ -25,11 +26,12 @@ import {
   CheckCircle2,
   Sparkles,
   HelpCircle,
-  BookOpen
+  BookOpen,
+  Video
 } from 'lucide-react';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'lessons' | 'songs' | 'fretboard' | 'rhythms' | 'tuner'>('lessons');
+  const [activeTab, setActiveTab] = useState<'lessons' | 'videos' | 'songs' | 'fretboard' | 'rhythms' | 'tuner'>('lessons');
   const [selectedSongId, setSelectedSongId] = useState<string>('no-dia-em-que-eu-sai-de-casa');
   const [targetChordForFretboard, setTargetChordForFretboard] = useState<string>('c');
   const [targetRhythmId, setTargetRhythmId] = useState<string>('sertanejo-universitario');
@@ -56,6 +58,12 @@ export default function App() {
   const handleOpenRhythm = (rhythmId: string) => {
     setTargetRhythmId(rhythmId);
     setActiveTab('rhythms');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleOpenVideo = (rhythmId: string) => {
+    setTargetRhythmId(rhythmId);
+    setActiveTab('videos');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -110,6 +118,28 @@ export default function App() {
               <span>Aulas do Zero</span>
             </button>
             <button
+              onClick={() => setActiveTab('videos')}
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
+                activeTab === 'videos'
+                  ? 'bg-amber-600 text-white shadow'
+                  : 'text-amber-200/70 hover:text-amber-100 hover:bg-amber-950/40'
+              }`}
+            >
+              <Video className="w-4 h-4" />
+              <span>Vídeos da Mão</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('rhythms')}
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
+                activeTab === 'rhythms'
+                  ? 'bg-amber-600 text-white shadow'
+                  : 'text-amber-200/70 hover:text-amber-100 hover:bg-amber-950/40'
+              }`}
+            >
+              <Flame className="w-4 h-4" />
+              <span>Modelos de Ritmos</span>
+            </button>
+            <button
               onClick={() => setActiveTab('songs')}
               className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
                 activeTab === 'songs'
@@ -130,17 +160,6 @@ export default function App() {
             >
               <Music className="w-4 h-4" />
               <span>Braço e Acordes</span>
-            </button>
-            <button
-              onClick={() => setActiveTab('rhythms')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
-                activeTab === 'rhythms'
-                  ? 'bg-amber-600 text-white shadow'
-                  : 'text-amber-200/70 hover:text-amber-100 hover:bg-amber-950/40'
-              }`}
-            >
-              <Flame className="w-4 h-4" />
-              <span>Modelos de Ritmos</span>
             </button>
             <button
               onClick={() => setActiveTab('tuner')}
@@ -178,7 +197,7 @@ export default function App() {
         <div className="md:hidden flex items-center justify-around px-2 py-2 border-t border-amber-950/60 bg-[#120a05]">
           <button
             onClick={() => setActiveTab('lessons')}
-            className={`flex flex-col items-center gap-1 py-1 px-1.5 rounded-lg text-[10px] font-bold transition cursor-pointer ${
+            className={`flex flex-col items-center gap-1 py-1 px-1 rounded-lg text-[10px] font-bold transition cursor-pointer ${
               activeTab === 'lessons' ? 'text-amber-400 font-extrabold' : 'text-amber-300/60'
             }`}
           >
@@ -186,8 +205,26 @@ export default function App() {
             <span>Aulas</span>
           </button>
           <button
+            onClick={() => setActiveTab('videos')}
+            className={`flex flex-col items-center gap-1 py-1 px-1 rounded-lg text-[10px] font-bold transition cursor-pointer ${
+              activeTab === 'videos' ? 'text-amber-400 font-extrabold' : 'text-amber-300/60'
+            }`}
+          >
+            <Video className="w-4 h-4" />
+            <span>Vídeos</span>
+          </button>
+          <button
+            onClick={() => setActiveTab('rhythms')}
+            className={`flex flex-col items-center gap-1 py-1 px-1 rounded-lg text-[10px] font-bold transition cursor-pointer ${
+              activeTab === 'rhythms' ? 'text-amber-400 font-extrabold' : 'text-amber-300/60'
+            }`}
+          >
+            <Flame className="w-4 h-4" />
+            <span>Ritmos</span>
+          </button>
+          <button
             onClick={() => setActiveTab('songs')}
-            className={`flex flex-col items-center gap-1 py-1 px-1.5 rounded-lg text-[10px] font-bold transition cursor-pointer ${
+            className={`flex flex-col items-center gap-1 py-1 px-1 rounded-lg text-[10px] font-bold transition cursor-pointer ${
               activeTab === 'songs' ? 'text-amber-400 font-extrabold' : 'text-amber-300/60'
             }`}
           >
@@ -196,7 +233,7 @@ export default function App() {
           </button>
           <button
             onClick={() => setActiveTab('fretboard')}
-            className={`flex flex-col items-center gap-1 py-1 px-1.5 rounded-lg text-[10px] font-bold transition cursor-pointer ${
+            className={`flex flex-col items-center gap-1 py-1 px-1 rounded-lg text-[10px] font-bold transition cursor-pointer ${
               activeTab === 'fretboard' ? 'text-amber-400 font-extrabold' : 'text-amber-300/60'
             }`}
           >
@@ -204,17 +241,8 @@ export default function App() {
             <span>Braço</span>
           </button>
           <button
-            onClick={() => setActiveTab('rhythms')}
-            className={`flex flex-col items-center gap-1 py-1 px-1.5 rounded-lg text-[10px] font-bold transition cursor-pointer ${
-              activeTab === 'rhythms' ? 'text-amber-400 font-extrabold' : 'text-amber-300/60'
-            }`}
-          >
-            <Flame className="w-4 h-4" />
-            <span>Ritmos</span>
-          </button>
-          <button
             onClick={() => setActiveTab('tuner')}
-            className={`flex flex-col items-center gap-1 py-1 px-1.5 rounded-lg text-[10px] font-bold transition cursor-pointer ${
+            className={`flex flex-col items-center gap-1 py-1 px-1 rounded-lg text-[10px] font-bold transition cursor-pointer ${
               activeTab === 'tuner' ? 'text-amber-400 font-extrabold' : 'text-amber-300/60'
             }`}
           >
@@ -271,6 +299,20 @@ export default function App() {
             <LessonsCourse
               onOpenFretboardWithChord={handleOpenFretboardWithChord}
               onOpenRhythm={handleOpenRhythm}
+            />
+          </div>
+        )}
+
+        {activeTab === 'videos' && (
+          <div className="space-y-6">
+            <RightHandVideoSimulator
+              currentRhythmId={targetRhythmId}
+              onSelectRhythm={(rhythmId) => setTargetRhythmId(rhythmId)}
+              onOpenFullRhythmPlayer={(rhythmId) => {
+                setTargetRhythmId(rhythmId);
+                setActiveTab('rhythms');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
             />
           </div>
         )}
@@ -361,12 +403,19 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  onClick={() => setActiveTab('videos')}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold transition cursor-pointer shadow"
+                >
+                  <Video className="w-3.5 h-3.5" />
+                  <span>Ver Vídeo da Mão Direita →</span>
+                </button>
                 <button
                   onClick={() => setActiveTab('fretboard')}
                   className="px-3 py-1.5 rounded-xl bg-amber-900/40 hover:bg-amber-900/60 border border-amber-700/40 text-amber-200 text-xs font-semibold transition cursor-pointer"
                 >
-                  Consultar Acordes no Braço →
+                  Consultar Acordes →
                 </button>
               </div>
             </div>
