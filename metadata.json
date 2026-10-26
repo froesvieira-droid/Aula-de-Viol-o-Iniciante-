@@ -1,0 +1,8 @@
+{
+  "name": "Violão Mestre - Aulas, Braço e Ritmos Sertanejo & Guarania",
+  "description": "Aprenda violão do zero com modelos de notas e acordes no braço do violão, ritmos interativos de pop, sertanejo e guarania com áudio real e suporte offline completo.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
