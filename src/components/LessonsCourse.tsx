@@ -91,10 +91,16 @@ export const LessonsCourse: React.FC<LessonsCourseProps> = ({
         {/* Progress Card */}
         <div className="bg-[#1c120a] border border-amber-900/40 rounded-2xl p-4 shadow-lg space-y-3">
           <div className="flex items-center justify-between text-xs">
-            <span className="font-bold text-amber-300 flex items-center gap-1.5">
-              <GraduationCap className="w-4 h-4 text-amber-400" />
-              Seu Progresso no Curso:
-            </span>
+            <div className="flex items-center gap-2">
+              <img 
+                src="/assets/aistudio/file_000000006aa0820ebd707cd51330b5fb_c34dcf50.png" 
+                alt="Vieira Logo" 
+                className="w-7 h-7 rounded-lg object-cover border border-amber-500/40 shadow-sm"
+              />
+              <span className="font-bold text-amber-300">
+                Método Vieira: Progresso
+              </span>
+            </div>
             <span className="font-mono font-bold text-amber-400">{progressPercentage}%</span>
           </div>
           <div className="w-full bg-[#100a05] h-2 rounded-full overflow-hidden border border-amber-950">

@@ -3,7 +3,7 @@
  * Suporte Offline Completo (PWA)
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Fretboard } from './components/Fretboard';
 import { RhythmPlayer } from './components/RhythmPlayer';
 import { LessonsCourse } from './components/LessonsCourse';
@@ -13,6 +13,7 @@ import { OfflineIndicator } from './components/OfflineIndicator';
 import { DailyTipCard } from './components/DailyTipCard';
 import { SongBook } from './components/SongBook';
 import { RightHandVideoSimulator } from './components/RightHandVideoSimulator';
+import { QuickChordModal } from './components/QuickChordModal';
 import { guitarAudio } from './services/guitarAudio';
 import { 
   GraduationCap, 
@@ -27,7 +28,8 @@ import {
   Sparkles,
   HelpCircle,
   BookOpen,
-  Video
+  Video,
+  Search
 } from 'lucide-react';
 
 export default function App() {
@@ -36,6 +38,19 @@ export default function App() {
   const [targetChordForFretboard, setTargetChordForFretboard] = useState<string>('c');
   const [targetRhythmId, setTargetRhythmId] = useState<string>('sertanejo-universitario');
   const [isAudioMuted, setIsAudioMuted] = useState<boolean>(false);
+  const [isQuickChordModalOpen, setIsQuickChordModalOpen] = useState<boolean>(false);
+
+  // Global keyboard shortcut: Ctrl+K / Cmd+K opens quick chord modal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setIsQuickChordModalOpen(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const handleOpenSong = (songId: string) => {
     setSelectedSongId(songId);
@@ -80,26 +95,28 @@ export default function App() {
             onClick={() => setActiveTab('lessons')} 
             className="flex items-center gap-3 cursor-pointer group select-none"
           >
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-amber-500 via-amber-600 to-amber-800 p-0.5 shadow-lg shadow-amber-600/30 group-hover:scale-105 transition-transform">
-              <div className="w-full h-full bg-[#1c120a] rounded-[14px] flex items-center justify-center">
-                {/* Acoustic Guitar Headstock / Soundhole mini-icon */}
-                <svg className="w-6 h-6 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-                </svg>
-              </div>
+            <div className="relative group-hover:scale-105 transition-transform duration-200">
+              <img 
+                src="/assets/aistudio/file_000000006aa0820ebd707cd51330b5fb_c34dcf50.png" 
+                alt="Vieira Violão Mestre" 
+                className="w-11 h-11 sm:w-13 sm:h-13 rounded-2xl object-cover shadow-lg shadow-amber-950/80 border-2 border-amber-500/60 ring-1 ring-amber-400/30"
+              />
+              <span className="absolute -bottom-1 -right-1 text-[8px] font-black uppercase tracking-wider bg-gradient-to-r from-amber-400 to-amber-600 text-stone-950 px-1.5 py-0.2 rounded-full shadow-md font-sans border border-amber-300">
+                Vieira
+              </span>
             </div>
 
             <div>
               <div className="flex items-center gap-2">
                 <span className="font-black text-lg sm:text-xl tracking-tight text-white group-hover:text-amber-400 transition-colors">
-                  Violão <span className="text-amber-400">Mestre</span>
+                  Vieira <span className="text-amber-400">Violão Mestre</span>
                 </span>
                 <span className="hidden sm:inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-950 border border-amber-700/50 text-amber-300">
                   Offline
                 </span>
               </div>
               <p className="text-[11px] text-amber-300/70 hidden sm:block">
-                Aulas, Braço & Ritmos: Pop, Sertanejo e Guarania
+                Aulas, Braço, Escalas & Ritmos Sertanejos e Pop
               </p>
             </div>
           </div>
@@ -159,7 +176,7 @@ export default function App() {
               }`}
             >
               <Music className="w-4 h-4" />
-              <span>Braço e Acordes</span>
+              <span>Braço & Escalas</span>
             </button>
             <button
               onClick={() => setActiveTab('tuner')}
@@ -174,8 +191,20 @@ export default function App() {
             </button>
           </nav>
 
-          {/* Right Header: Audio Mute & PWA Install Button */}
+          {/* Right Header: Quick Chord Search, Audio Mute & PWA Install Button */}
           <div className="flex items-center gap-2 sm:gap-3">
+            <button
+              onClick={() => setIsQuickChordModalOpen(true)}
+              className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-gradient-to-r from-amber-600/30 to-amber-700/20 hover:from-amber-600/50 hover:to-amber-700/40 border border-amber-600/40 hover:border-amber-500 text-amber-200 hover:text-white text-xs font-bold transition shadow-sm cursor-pointer group"
+              title="Buscar qualquer acorde e digitação (Ctrl + K)"
+            >
+              <Search className="w-3.5 h-3.5 text-amber-400 group-hover:scale-110 transition-transform" />
+              <span className="hidden sm:inline">Buscar Acorde</span>
+              <kbd className="hidden lg:inline-block text-[9px] px-1.5 py-0.5 rounded bg-black/40 border border-amber-900/60 font-mono text-amber-300/80">
+                ⌘K
+              </kbd>
+            </button>
+
             <button
               onClick={toggleMasterMute}
               className={`p-2 rounded-xl border text-xs transition cursor-pointer ${
@@ -256,17 +285,25 @@ export default function App() {
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
         {activeTab === 'lessons' && (
           <div className="space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-gradient-to-r from-amber-950/50 via-[#1c120a] to-[#140c06] border border-amber-800/30 p-4 rounded-2xl">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-amber-600/20 border border-amber-500/40 flex items-center justify-center text-amber-400">
-                  <GraduationCap className="w-5 h-5" />
-                </div>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r from-amber-950/60 via-[#1c120a] to-[#140c06] border border-amber-800/40 p-4 sm:p-5 rounded-2xl shadow-xl relative overflow-hidden">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <img 
+                  src="/assets/aistudio/file_000000006aa0820ebd707cd51330b5fb_c34dcf50.png" 
+                  alt="Vieira Violão Mestre" 
+                  className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl object-cover shadow-lg border-2 border-amber-500/60 ring-2 ring-amber-400/20 shrink-0"
+                />
                 <div>
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <span className="text-[10px] font-black uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded-full">
+                      Método Vieira
+                    </span>
+                    <span className="text-[11px] text-amber-400/80 font-medium">100% Offline</span>
+                  </div>
                   <h2 className="text-base sm:text-lg font-black text-amber-100">
-                    Curso de Violão para Iniciantes (100% Offline)
+                    Curso de Violão para Iniciantes
                   </h2>
                   <p className="text-xs text-amber-300/80">
-                    Aulas estruturadas com teoria clara, exercícios práticos e músicas do zero.
+                    Aulas estruturadas com teoria clara, exercícios práticos, braço interativo e cifras do zero.
                   </p>
                 </div>
               </div>
@@ -423,6 +460,7 @@ export default function App() {
             <RhythmPlayer
               initialRhythmId={targetRhythmId}
               onSelectChordToView={(chordId) => handleOpenFretboardWithChord(chordId)}
+              onOpenVideo={(rhythmId) => handleOpenVideo(rhythmId)}
             />
           </div>
         )}
@@ -437,20 +475,51 @@ export default function App() {
       {/* Footer */}
       <footer className="mt-auto border-t border-amber-950 bg-[#120a05] py-8 text-amber-300/60 text-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2 text-center md:text-left">
-            <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-            <p>
-              <strong>Violão Mestre</strong> — Sintetizador físico Karplus-Strong & Aulas 100% Offline.
-            </p>
+          <div className="flex items-center gap-3 text-center md:text-left">
+            <img 
+              src="/assets/aistudio/file_000000006aa0820ebd707cd51330b5fb_c34dcf50.png" 
+              alt="Vieira Violão Mestre Logo" 
+              className="w-10 h-10 rounded-xl object-cover border border-amber-500/50 shadow-md shrink-0 ring-1 ring-amber-400/20"
+            />
+            <div>
+              <p className="text-amber-100 font-bold text-sm">
+                Vieira Violão Mestre
+              </p>
+              <p className="text-[11px] text-amber-300/70">
+                Sintetizador acústico Karplus-Strong, ritmos brasileiros & aulas 100% offline.
+              </p>
+            </div>
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-4 text-[11px] text-amber-400/80">
             <span>Ritmos: Pop • Sertanejo • Guarania • Valsa • Moda de Viola</span>
             <span>•</span>
-            <span>Sistema CAGED e Dicionário de Acordes</span>
+            <span>Sistema CAGED, Acordes e Escalas Musicais</span>
           </div>
         </div>
       </footer>
+
+      {/* Floating Quick Chord Search Button (Accessible from every tab) */}
+      <button
+        onClick={() => setIsQuickChordModalOpen(true)}
+        className="fixed bottom-5 right-5 z-40 flex items-center gap-2 px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-full bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-bold text-xs sm:text-sm shadow-xl shadow-black/60 border border-amber-400/40 hover:scale-105 active:scale-95 transition-all cursor-pointer group"
+        aria-label="Abrir busca rápida de acordes"
+        title="Buscar qualquer acorde e digitação (Ctrl + K)"
+      >
+        <Search className="w-4 h-4 text-amber-200 group-hover:rotate-12 transition-transform" />
+        <span className="tracking-wide">Acordes</span>
+        <span className="hidden sm:inline-block text-[10px] bg-black/40 border border-amber-500/30 px-1.5 py-0.5 rounded-full font-mono text-amber-200">
+          Ctrl+K
+        </span>
+      </button>
+
+      {/* Quick Chord Modal (Global across all tabs) */}
+      <QuickChordModal
+        isOpen={isQuickChordModalOpen}
+        onClose={() => setIsQuickChordModalOpen(false)}
+        onSelectChordOnFretboard={handleOpenFretboardWithChord}
+        initialChordId={targetChordForFretboard}
+      />
     </div>
   );
 }

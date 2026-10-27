@@ -17,8 +17,10 @@ import {
   ChevronUp,
   Lightbulb,
   Radio,
-  FileText
+  FileText,
+  ExternalLink
 } from 'lucide-react';
+import { RHYTHM_VIDEO_TUTORIALS } from '../data/rhythmVideoData';
 
 interface SongBookProps {
   initialSongId?: string;
@@ -39,6 +41,7 @@ export const SongBook: React.FC<SongBookProps> = ({
 
   const song = SONGS_DATABASE.find(s => s.id === selectedSongId) || SONGS_DATABASE[0];
   const associatedRhythm = RHYTHM_PATTERNS.find(r => r.id === song.rhythmId) || RHYTHM_PATTERNS[0];
+  const associatedTutorial = RHYTHM_VIDEO_TUTORIALS[song.rhythmId];
 
   const lyricsContainerRef = useRef<HTMLDivElement | null>(null);
   const scrollIntervalRef = useRef<number | null>(null);
@@ -211,6 +214,22 @@ export const SongBook: React.FC<SongBookProps> = ({
               <Flame className="w-4 h-4 text-amber-400" />
               <span>Ver Ritmo</span>
             </button>
+
+            {associatedTutorial && (
+              <a
+                href={associatedTutorial.youtubeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-red-950/70 hover:bg-red-900 border border-red-700/60 text-red-200 hover:text-white text-xs font-bold transition hover:scale-105 active:scale-95 cursor-pointer shadow-sm"
+                title={`Assistir vídeo no YouTube de como tocar o ritmo ${associatedRhythm.name}`}
+              >
+                <svg className="w-3.5 h-3.5 fill-current text-red-500" viewBox="0 0 24 24">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+                <span>Vídeo da Batida</span>
+                <ExternalLink className="w-3 h-3 text-red-400" />
+              </a>
+            )}
           </div>
         </div>
 

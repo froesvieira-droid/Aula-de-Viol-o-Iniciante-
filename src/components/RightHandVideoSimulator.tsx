@@ -18,7 +18,8 @@ import {
   Volume2,
   VolumeX,
   Flame,
-  ShieldCheck
+  ShieldCheck,
+  ExternalLink
 } from 'lucide-react';
 
 interface RightHandVideoSimulatorProps {
@@ -485,14 +486,54 @@ export const RightHandVideoSimulator: React.FC<RightHandVideoSimulatorProps> = (
       {/* Video Mode */}
       {viewMode === 'video' && (
         <div className="bg-gradient-to-b from-[#22150c] to-[#140b05] border border-amber-800/40 rounded-2xl p-4 sm:p-6 shadow-2xl space-y-6">
-          <div className="space-y-1 pb-3 border-b border-amber-900/40">
-            <h3 className="text-lg sm:text-xl font-black text-amber-100 flex items-center gap-2">
-              <Video className="w-5 h-5 text-amber-400" />
-              {tutorial.title}
-            </h3>
-            <p className="text-xs text-amber-300/80">
-              Demonstração detalhada em vídeo com foco exclusivo na mão direita nas cordas do violão.
-            </p>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-amber-900/40">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-black uppercase tracking-wider bg-red-950 text-red-300 border border-red-800/60 px-2 py-0.5 rounded-full flex items-center gap-1">
+                  <svg className="w-3 h-3 fill-current text-red-500" viewBox="0 0 24 24">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                  </svg>
+                  YouTube Oficial
+                </span>
+                <span className="text-xs text-amber-400 font-semibold">
+                  {tutorial.instructorName} • Duração: {tutorial.duration}
+                </span>
+              </div>
+              <h3 className="text-lg sm:text-xl font-black text-amber-100 flex items-center gap-2">
+                <Video className="w-5 h-5 text-amber-400 shrink-0" />
+                <span>{tutorial.title}</span>
+              </h3>
+              <p className="text-xs text-amber-300/80">
+                Demonstração em vídeo de alta qualidade mostrando a postura da mão direita, toques e ritmos nas cordas.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2 shrink-0">
+              <a
+                href={tutorial.youtubeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-black text-xs shadow-lg shadow-red-950/60 transition hover:scale-105 active:scale-95 cursor-pointer"
+                title="Abrir este vídeo diretamente no aplicativo do YouTube"
+              >
+                <svg className="w-4 h-4 fill-current text-white shrink-0" viewBox="0 0 24 24">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+                <span>Assistir no YouTube</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+
+              <a
+                href={tutorial.youtubeSearchUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 px-3 py-2.5 rounded-xl bg-[#140b05] hover:bg-amber-950/80 border border-amber-900/60 text-amber-300 hover:text-white font-bold text-xs transition cursor-pointer"
+                title="Pesquisar mais tutoriais e variações deste ritmo no YouTube"
+              >
+                <span>Outras Aulas</span>
+                <ExternalLink className="w-3 h-3 text-amber-400" />
+              </a>
+            </div>
           </div>
 
           <div className="relative w-full aspect-video rounded-2xl overflow-hidden border-2 border-amber-700/50 bg-black shadow-2xl">
@@ -500,9 +541,27 @@ export const RightHandVideoSimulator: React.FC<RightHandVideoSimulatorProps> = (
               className="w-full h-full"
               src={`https://www.youtube-nocookie.com/embed/${tutorial.embedVideoId}?autoplay=0&rel=0&modestbranding=1`}
               title={tutorial.title}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
             />
+          </div>
+
+          {/* Quick Notice for YouTube app open */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 bg-red-950/20 border border-red-900/40 rounded-xl text-xs">
+            <div className="flex items-center gap-2 text-amber-200/90">
+              <svg className="w-4 h-4 text-red-400 shrink-0 fill-current" viewBox="0 0 24 24">
+                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+              </svg>
+              <span>Se preferir assistir no app do YouTube ou em tela cheia no celular:</span>
+            </div>
+            <a
+              href={tutorial.youtubeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-amber-300 hover:text-white font-bold underline flex items-center gap-1 shrink-0"
+            >
+              <span>Abrir aula no YouTube ↗</span>
+            </a>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

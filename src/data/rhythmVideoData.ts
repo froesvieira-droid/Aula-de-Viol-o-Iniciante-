@@ -22,6 +22,8 @@ export interface RhythmVideoTutorial {
   instructorName: string;
   duration: string;
   embedVideoId: string; // YouTube video ID for real video demonstration
+  youtubeUrl: string; // Direct link to open on YouTube
+  youtubeSearchUrl: string; // Search query on YouTube for alternative lessons
   fallbackVideoUrl?: string;
   thumbnailUrl: string;
   povDescription: string;
@@ -36,9 +38,11 @@ export const RHYTHM_VIDEO_TUTORIALS: Record<string, RhythmVideoTutorial> = {
   'sertanejo-universitario': {
     rhythmId: 'sertanejo-universitario',
     title: 'Mão Direita: Batida Sertaneja Universitária e Balada',
-    instructorName: 'Prof. Violão Mestre',
+    instructorName: 'Aula de Ritmos Sertanejos',
     duration: '4:15',
-    embedVideoId: 'f0K2g58G78k', // Sertanejo rhythm tutorial
+    embedVideoId: 'Qw7BGiSkhcI', // Real YouTube video for batida sertaneja
+    youtubeUrl: 'https://www.youtube.com/watch?v=Qw7BGiSkhcI',
+    youtubeSearchUrl: 'https://www.youtube.com/results?search_query=como+tocar+batida+sertanejo+violao+cifra+club',
     thumbnailUrl: 'https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=800&auto=format&fit=crop&q=80',
     povDescription: 'Olhando de cima, observe que o polegar (P) se projeta para a frente para atacar o bordão. No tempo 3, a base carnosa da palma (abaixo do dedinho) assenta contra as cordas no exato instante da descida dos dedos.',
     frontalDescription: 'De frente, o antebraço descansa suavemente na quina superior do corpo do violão. O movimento de batida não vem do cotovelo, e sim da rotação suave do pulso.',
@@ -196,9 +200,11 @@ export const RHYTHM_VIDEO_TUTORIALS: Record<string, RhythmVideoTutorial> = {
   'guarania-sertaneja': {
     rhythmId: 'guarania-sertaneja',
     title: 'Mão Direita: A Levada da Guarania Sertaneja (3/4 e 6/8)',
-    instructorName: 'Mestre da Viola e Violão',
+    instructorName: 'Prof. Marcos Duprá (Primeiros Acordes)',
     duration: '5:02',
-    embedVideoId: 'U7_eE-H6Z1c', // Guarania tutorial
+    embedVideoId: 'My_XmW132ek', // Batida de Guarânia no Violão - Marcos Duprá
+    youtubeUrl: 'https://www.youtube.com/watch?v=My_XmW132ek',
+    youtubeSearchUrl: 'https://www.youtube.com/results?search_query=como+tocar+batida+de+guarania+no+violao',
     thumbnailUrl: 'https://images.unsplash.com/photo-1525201548942-d8732f6617a0?w=800&auto=format&fit=crop&q=80',
     povDescription: 'O violão caipira/pantaneiro descansa inclinado. O polegar toca o bordão no tempo 1, e os dedos I, M, A ficam posicionados como uma garra pronta para puxar as cordas 3, 2 e 1 juntas.',
     frontalDescription: 'Mão em formato de concha suave sobre a boca do violão. A puxada é para fora e para cima, sem esbarrar nas cordas vizinhas.',
@@ -322,9 +328,11 @@ export const RHYTHM_VIDEO_TUTORIALS: Record<string, RhythmVideoTutorial> = {
   'pop-rock-universal': {
     rhythmId: 'pop-rock-universal',
     title: 'Mão Direita: A Batida Pop Rock Universal (↓ ↓↑ ↑↓↑)',
-    instructorName: 'Prof. Violão Mestre',
+    instructorName: 'Roda de Violão',
     duration: '4:48',
-    embedVideoId: '8d_H2fOa_7Y', // Pop rock rhythm tutorial
+    embedVideoId: 'Cu9XG-HbxCg', // Ritmos no Violão: Batida Pop Rock 1
+    youtubeUrl: 'https://www.youtube.com/watch?v=Cu9XG-HbxCg',
+    youtubeSearchUrl: 'https://www.youtube.com/results?search_query=como+tocar+batida+pop+rock+violao+cifra+club',
     thumbnailUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&auto=format&fit=crop&q=80',
     povDescription: 'O antebraço e a mão se movem continuamente para cima e para baixo sem interrupção. O tempo 3 tem o movimento descendente fantasma (no ar).',
     frontalDescription: 'Mão relaxada, dedos meio flexionados como segurando uma bolinha de gude. A palhetada com os dedos usa as costas das unhas na descida e a polpa/unha do polegar na subida.',
@@ -447,10 +455,12 @@ export const RHYTHM_VIDEO_TUTORIALS: Record<string, RhythmVideoTutorial> = {
 
   'moda-de-viola': {
     rhythmId: 'moda-de-viola',
-    title: 'Mão Direita: Toada e Pagode Caipira (Rasqueado e Repique)',
-    instructorName: 'Mestre Caipira',
-    duration: '4:30',
-    embedVideoId: 'gG_78hI1mB4',
+    title: 'Mão Direita: Toada e Pagode Caipira no Violão (Rasqueado e Repique)',
+    instructorName: 'Hamilton Oliveira',
+    duration: '10:15',
+    embedVideoId: 'VfdsSg0KqeQ', // Aprenda Pagode de Viola no Violão em 10 Minutos - Hamilton Oliveira
+    youtubeUrl: 'https://www.youtube.com/watch?v=VfdsSg0KqeQ',
+    youtubeSearchUrl: 'https://www.youtube.com/results?search_query=como+tocar+pagode+de+viola+no+violao',
     thumbnailUrl: 'https://images.unsplash.com/photo-1541689592655-f5f52825a3b8?w=800&auto=format&fit=crop&q=80',
     povDescription: 'Ataque decidido: o polegar ataca o bordão e em seguida os dedos descem rasgando as cordas com o abafamento seco.',
     frontalDescription: 'Mão firme e enérgica, som rústico de fazenda com muita percussão na madeira.',
@@ -537,9 +547,11 @@ export const RHYTHM_VIDEO_TUTORIALS: Record<string, RhythmVideoTutorial> = {
   'valsa-sertaneja': {
     rhythmId: 'valsa-sertaneja',
     title: 'Mão Direita: Valsa e Canção Sertaneja Romântica (3/4)',
-    instructorName: 'Prof. Violão Mestre',
+    instructorName: 'Prof. Violão Prático',
     duration: '3:45',
-    embedVideoId: 'J4Y6v3nU7p8',
+    embedVideoId: 'fxCWEdIHIMw', // Ritmo de Valsa no Violão
+    youtubeUrl: 'https://www.youtube.com/watch?v=fxCWEdIHIMw',
+    youtubeSearchUrl: 'https://www.youtube.com/results?search_query=como+tocar+batida+de+valsa+no+violao',
     thumbnailUrl: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&auto=format&fit=crop&q=80',
     povDescription: 'O ritmo mais sereno: polegar no tempo 1 (baixo) e dois toques descendentes aveludados nos tempos 2 e 3.',
     frontalDescription: 'Mão relaxada, movimento pendular suave de valsa.',
@@ -609,9 +621,11 @@ export const RHYTHM_VIDEO_TUTORIALS: Record<string, RhythmVideoTutorial> = {
   'xote-violao': {
     rhythmId: 'xote-violao',
     title: 'Mão Direita: Xote e Forró Pé de Serra (Puxada Sincopada)',
-    instructorName: 'Mestre do Forró',
-    duration: '4:20',
-    embedVideoId: 'b_7eT_e8Y0w',
+    instructorName: 'Maestro Adeildo Lopes',
+    duration: '6:10',
+    embedVideoId: 'anQWTlyolH4', // Como tocar Xote Batida no Violão
+    youtubeUrl: 'https://www.youtube.com/watch?v=anQWTlyolH4',
+    youtubeSearchUrl: 'https://www.youtube.com/results?search_query=como+tocar+batida+de+xote+no+violao',
     thumbnailUrl: 'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=800&auto=format&fit=crop&q=80',
     povDescription: 'O polegar imita o zabumba grave no tempo 1, e os dedos puxam com staccato (corte seco) no contratempo.',
     frontalDescription: 'Mão em formato de garra rápida, soltando a pressão para dar o corte.',
